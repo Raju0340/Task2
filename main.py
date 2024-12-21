@@ -8,11 +8,11 @@ def fetch_website_content(url):
         soup =BeautifulSoup (response.text, 'html.parser')
         return soup.get_text(separator='', strip=True)
      except requests.exceptions.SSLError as ssl_err:
-       print(f"SSL error occurred: {ssl_err}")
+       print(f" An SSL error occurred: {ssl_err}")
      except requests.exceptions.RequestException as req_err:
        print(f"Request error occurred: {req_err}")
      except Exception as e:
-      print(f"An error occurred: {e}")
+      print(f"An error has occurred: {e}")
 def search_in_content(query, content_dict):
     """Searches for a query in the scraped content and returns matching results."""
     matches = []
@@ -21,22 +21,23 @@ def search_in_content(query, content_dict):
             matches.append((url, content))
     return matches
 websites = [
+     "https://und.edu/",
     "https://www.washington.edu/",
-    "https://www.stanford.edu/",
-    "https://und.edu/"
+    "https://www.stanford.edu/"
+    
 ]
 
 scraped_content = {}
-for website in websites:
-    content= fetch_website_content(website)
+for w in websites:
+    content= fetch_website_content(w)
     if content:
-        print(f"Successfully scraped content from {website}")
-        scraped_content[website] =content
+        print(f"Successfully scraped content from the {w}")
+        scraped_content[w] =content
 query_input= input("Enter your query: ")
 search_results =search_in_content(query_input, scraped_content)
 if search_results:
-    print("\nResults found:")
+    print("\n Results found:")
     for url, content in search_results:
         print(f"\nFrom {url}:\n{content[:200]}...")
 else:
-    print("No results found for your query.")
+    print("No search results found for your query.")
