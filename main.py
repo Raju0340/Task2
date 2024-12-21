@@ -1,5 +1,19 @@
 import requests
 from bs4 import BeautifulSoup
+websites = [
+     "https://und.edu/",
+    "https://www.washington.edu/",
+    "https://www.stanford.edu/"
+    
+]
+
+def search_in_content(query, content_dict):
+    """Searches for a query in the scraped content and returns matching results."""
+    matches = []
+    for url, content in content_dict.items():
+        if query.lower() in content.lower():
+            matches.append((url, content))
+    return matches
 def fetch_website_content(url):
      """Fetches and returns the text content of a website."""
      try:
@@ -13,19 +27,6 @@ def fetch_website_content(url):
        print(f"Request error occurred: {req_err}")
      except Exception as e:
       print(f"An error has occurred: {e}")
-def search_in_content(query, content_dict):
-    """Searches for a query in the scraped content and returns matching results."""
-    matches = []
-    for url, content in content_dict.items():
-        if query.lower() in content.lower():
-            matches.append((url, content))
-    return matches
-websites = [
-     "https://und.edu/",
-    "https://www.washington.edu/",
-    "https://www.stanford.edu/"
-    
-]
 
 scraped_content = {}
 for w in websites:
